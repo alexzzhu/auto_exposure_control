@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+
+<launch>
+  <arg name="camera_name" default="/pg_15508253"/>
+  <arg name="camera_topic" default="/pg_15508253/image_raw"/>
+  
+  <node name="auto_exposure_control" pkg="auto_exposure_control" type="auto_exposure_control.py" respawn="true">
+    <param name="camera_name" type="string" value="$(arg camera_name)"/>
+    <remap from="image_raw" to="$(arg camera_topic)"/>
+  </node>
+  
+</launch>
