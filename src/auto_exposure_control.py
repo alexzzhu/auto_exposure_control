@@ -39,7 +39,11 @@ def image_callback(image, args):
     else:
         brightness_image = cv_image
 
+    #crop_size = 10
+    #brightness_image = brightness_image[rows-crop_size:rows+crop_size, cols-crop_size:cols+crop_size]
 
+    #(rows, cols) = brightness_image.shape
+    
     hist = cv2.calcHist([brightness_image],[0],None,[5],[0,256])
     
     mean_sample_value = 0
@@ -53,7 +57,7 @@ def image_callback(image, args):
 
     # Middle value MSV is 2.5, range is 0-5
     # Note: You may need to retune the PI gains if you change this
-    desired_msv = 2
+    desired_msv = 2.5
     # Gains
     k_p = 0.05
     k_i = 0.01
@@ -63,7 +67,7 @@ def image_callback(image, args):
     err_i += err_p
     if abs(err_i) > max_i:
         err_i = np.sign(err_i)*max_i
-
+    
     # Don't change exposure if we're close enough. Changing too often slows
     # down the data rate of the camera.
     if abs(err_p) > 0.5:
